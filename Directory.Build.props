@@ -1,0 +1,16 @@
+﻿<!-- See https://aka.ms/dotnet/msbuild/customize for more details on customizing your build -->
+
+<Project> 
+    <PropertyGroup> 
+        <TargetFramework>net9.0</TargetFramework>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <WarningsNotAsErrors>NU1901;NU1902;NU1903;NU1904</WarningsNotAsErrors>
+        <ArtifactsPath>$(MSBuildThisFileDirectory)artifacts</ArtifactsPath>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable> <!--Bật tính năng nullable reference types (kiểu tham chiếu nullable). Tính năng này giúp trình biên dịch cảnh báo bạn nếu bạn cố gắng sử dụng một biến có thể là null mà không kiểm tra nó, giúp ngăn chặn lỗi NullReferenceException khi chạy chương trình.-->
+    </PropertyGroup>
+
+    <!-- To use dotnet ef without 'msbuildprojectextensionspath' - fixed in .NET 10 -->
+    <Import Condition="Exists('$(MSBuildProjectDirectory)\obj\$(MSBuildProjectFile).EntityFrameworkCore.targets')"
+          Project="$(MSBuildProjectDirectory)\obj\$(MSBuildProjectFile).EntityFrameworkCore.targets"/>
+</Project>

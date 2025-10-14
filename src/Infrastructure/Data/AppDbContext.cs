@@ -1,0 +1,25 @@
+﻿using Application.Common.Interfaces;
+using Domain.Entities;
+using Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+
+namespace Infrastructure.Data;
+
+public class AppDbContext : IdentityDbContext<AppUser>, IAppDbContext
+{
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {
+    }
+
+    public DbSet<TodoList> TodoLists => Set<TodoList>();
+
+    public DbSet<TodoItem> TodoItems => Set<TodoItem>();
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
+}
