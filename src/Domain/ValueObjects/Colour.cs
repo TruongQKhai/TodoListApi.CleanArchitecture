@@ -1,7 +1,21 @@
-﻿namespace Domain.ValueObjects;
+﻿using TodoListApiCA.Domain.Common;
+using TodoListApiCA.Domain.Exceptions;
 
-public class Colour(string code)
+namespace Domain.ValueObjects;
+
+public class Colour(string code) : ValueObject
 {
+
+    public static Colour From(string code)
+    {
+        var colour = new Colour(code);
+
+        if (!SupportedColors.Contains(colour))
+            throw new UnsupportedColourException(code);
+
+        return colour;
+    }
+
     public static Colour White => new("#FFFFFF");
 
     public static Colour Red => new("#FF5733");
@@ -19,4 +33,40 @@ public class Colour(string code)
     public static Colour Grey => new("#999999");
 
     public string Code { get; private set; } = string.IsNullOrWhiteSpace(code) ? "#000000" : code;
+
+    public static implicit operator string(Colour colour)
+    {
+        return colour.ToString();
+    }
+
+    public static implicit operator Colour(string code)
+    {
+        return From(code);
+    }
+
+    public override string ToString()
+    {
+        return Code;
+    }
+
+    protected static IEnumerable<Colour> SupportedColors
+    {
+        get
+        {
+            yield return White;
+            yield return Red;
+            yield return Orange;
+            yield return Yellow;
+            yield return Green;
+            yield return Blue;
+            yield return Purple;
+            yield return Grey;
+        }
+    }
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Code;
+    }
+
 }
