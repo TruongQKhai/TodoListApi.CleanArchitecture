@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using TodoListApiCA.Application.Common.Models;
 using TodoListApiCA.Application.TodoItems.Commands.CreateTodoItem;
+using TodoListApiCA.Application.TodoItems.Commands.UpdateTodoItem;
 using TodoListApiCA.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 using WebAPI.Infrustructure;
 
@@ -13,6 +14,7 @@ public class TodoItems : EndpointGroupBase
     {
         groupBuilder.MapGet(GetTodoItemsWithPagination).RequireAuthorization();
         groupBuilder.MapPost(CreateTodoItem).RequireAuthorization();
+        groupBuilder.MapPut(UpdateTodoItem, "{id}").RequireAuthorization();
     }
 
     public async Task<Created<int>> CreateTodoItem(ISender sender, CreateTodoItemCommand command)
@@ -20,6 +22,16 @@ public class TodoItems : EndpointGroupBase
         var id = await sender.Send(command);
 
         return TypedResults.Created($"/{nameof(TodoItems)}/{id}", id);
+    }
+
+    public async Task<Results<NoContent, BadRequest>> UpdateTodoItem(ISender sender, int id, UpdateTodoItemCommand command)
+    {
+        if (id != command.Id)
+            return TypedResults.BadRequest();
+
+        await sender.Send(command);
+
+        return TypedResults.NoContent();
     }
 
     public async Task<Ok<PaginatedList<TodoItemBriefDto>>> GetTodoItemsWithPagination(
