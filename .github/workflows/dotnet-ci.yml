@@ -19,7 +19,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '9.0.0' # Thay thế bằng phiên bản .NET bạn đang dùng
+        dotnet-version: '9.0.x' # Thay thế bằng phiên bản .NET bạn đang dùng
 
     - name: Restore dependencies
       run: dotnet restore
