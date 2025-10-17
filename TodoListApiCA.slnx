@@ -11,6 +11,7 @@
     <Project Path="src/WebAPI/WebAPI.csproj" Id="9d2c1fe8-44a3-4eb7-b41e-c10ad4773bde" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/Application.UnitTests/Application.UnitTests.csproj" Id="4a50a5cd-dd23-4986-84bb-0f7859bfcca0" />
     <Project Path="tests/Domain.UnitTests/Domain.UnitTests.csproj" Id="55a4950a-3c0b-41c1-aff9-2df1d283523e" />
   </Folder>
 </Solution>
