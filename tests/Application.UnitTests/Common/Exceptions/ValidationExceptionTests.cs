@@ -46,7 +46,7 @@ public class ValidationExceptionTests
         actual.Keys.ShouldBe(["Password", "Age"], ignoreOrder: true);
 
         actual["Age"].ShouldBe(
-            ["must be 25 or younger", "must be over 18"], 
+            ["must be 25 or younger", "must be 18 or older"], 
             ignoreOrder: true);
 
         actual["Password"].ShouldBe(
@@ -57,6 +57,5 @@ public class ValidationExceptionTests
                 "must contain a digit"
             ], 
             ignoreOrder: true);
-
     }
 }

@@ -49,5 +49,4 @@ public class MappingTests
         // Type without parameterless constructor
         return RuntimeHelpers.GetUninitializedObject(type);
     }
-
 }
